@@ -1,6 +1,7 @@
 package student.service.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import student.service.VO.ResponseTemplateVO;
 import student.service.entity.Student;
@@ -11,8 +12,16 @@ import java.util.List;
 @RestController
 @RequestMapping("/student")
 public class StudentController {
+    
     @Autowired
     private StudentService studentService;
+    
+//    @Value("${welcome}")
+//    String bb;
+//    @GetMapping("/")
+//    public String hello(){
+//        return bb;
+//    }
 
     @PostMapping("/save")
     public Student saveStudent(@RequestBody Student student){
