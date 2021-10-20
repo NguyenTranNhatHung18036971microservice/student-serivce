@@ -1,5 +1,7 @@
 package student.service.service;
 
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -21,9 +23,13 @@ public class StudentService {
     public Student addStudent(Student student){
         return studentRepository.save(student);
     }
+
+
     public Student saveStudent(Student student){
         return studentRepository.save(student);
     }
+
+
     public List<Student> getAll(){
         return studentRepository.findAll();
     }
@@ -38,6 +44,13 @@ public class StudentService {
         studentRepository.save(studentFromDB);
         return studentFromDB;
     }
+
+    //@Retry(name="basic")
+    //@Retry(name="intervalFunctionExponentialExample")
+    //@Retry(name="intervalFunctionRandomExample")
+    //@Retry(name="predicateExample")
+    //@Retry(name="throwingException")
+    @RateLimiter(name="basicExample")
     public ResponseTemplateVO getStudentWithKhoa(Long studentId){
         ResponseTemplateVO vo = new ResponseTemplateVO();
         Student student = studentRepository.findById(studentId).get();
@@ -47,6 +60,9 @@ public class StudentService {
         vo.setKhoa(khoa);
         return vo;
     }
+//    private List<Student> messageResponse(){
+//        return "Server is busy";
+//    }
 
 }
 
